@@ -48,8 +48,11 @@ def hash_user_file(user_file, file_key):
 
 def retrieve_from_hash(file_hash, file_key):
     # client = ipfshttpclient.connect('/dns/ipfs.infura.io/tcp/5001/https')
-    client = Client(api_key = app.config['KEY'] )
-    file_content = client.download(file_hash)
+    # client = Client(api_key = app.config['KEY'] )
+    # file_content = client.download(file_hash)
+    response = requests.get(f'https://{file_hash}.ipfs.dweb.link') # add error handelling
+    file_content = response.content
+    
     file_path = os.path.join("./downloads", file_hash)
     # file_path = os.path.join(app.config['DOWNLOAD_FOLDER'], file_hash)
     user_file = open(file_path, 'ab+')
